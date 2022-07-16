@@ -12,10 +12,6 @@ function calculator(value) {
     let operation = null;
     let variable2 = null;
 
-    console.log('Массив: ', value);
-
-    console.log("Длинна массива", value.length)
-
     for (let i = 0; i < value.length; i++) {
         if (value[i] == " " || i == value.length - 1) {
             if (variable1 === null) {
@@ -32,12 +28,8 @@ function calculator(value) {
             }
 
             start = i;
-
-            // console.log('Value[i] = ',value[i],'i = ', i)
         }
     }
-
-    console.log('Переменная старт: ', start);
 
     console.log(toRomanLogic(variable1, operation, variable2));
     return toRomanLogic(variable1, operation, variable2);
@@ -62,14 +54,11 @@ function toRomanLogic(x, operation, y) {
         if (x == Roman[r] || y == Roman[r]) romanCount++;
         if (romanCount == 1 & (x == y)) romanCount = 2;
     }
-    console.log("arabCount =", arabCount, "romanCount =", romanCount);
     // 2
-    // 
-    // // 3
-    // else
     try {
         if (arabCount == romanCount || (arabCount < 2 & romanCount < 2)) throw new Error("Недостаточно переменных или синтаксическая ошибка");
         if (romanCount == 2) {
+            // 3
             for (let i = 0; i < Roman.length; i++) {
                 if (x == Roman[i]) {
                     x = i + 1;
@@ -78,7 +67,6 @@ function toRomanLogic(x, operation, y) {
                     y = i + 1;
                 }
             }
-            // console.log ("variable1 =",x,"variable2 =",y)
             let Leng = true;
             return mathOp(x, operation, y, Leng);
         }
@@ -88,10 +76,6 @@ function toRomanLogic(x, operation, y) {
     } catch (error) {
         throw error
     }
-}
-
-function div(integer) {
-    return integer -= integer % 1;
 }
 
 /*
@@ -105,7 +89,6 @@ function mathOp(x, operation, y, Leng) {
     // 1
     x = parseInt(x, 10);
     y = parseInt(y, 10);
-    // console.log('x =', x, 'y =', y, 'operation =', operation)
     // 2
     try {
         if (operation != "+" && operation != "-" && operation != "/" && operation != "*") throw new Error("Неверная операция");
@@ -123,23 +106,15 @@ function mathOp(x, operation, y, Leng) {
                 result = x * y;
                 break;
             default:
-                // console.log('Я работаю')
-                // throw new Error("Неверная операция");
-                // break;
+                break;
         }
     } catch (error) {
         throw error
     }
-    // console.log('result до изменения:',result)
     // 3
-    result = div(result)
+    result -= result % 1;
     // 4
     if (Leng) {
-        // for (let i = 0; i < Roman.length; i++) {
-        //     if (result == i + 1) {
-        //         result = Roman[i];
-        //     }
-        // }
         if (result < 1) result = "";
         else {
             let temporaryResult = result;
@@ -148,7 +123,6 @@ function mathOp(x, operation, y, Leng) {
                 if (temporaryResult >= 100) {
                     result.push("C");
                     temporaryResult -= 100;
-
                 }
                 else if (temporaryResult >= 50) {
                     result.push("L");
@@ -209,9 +183,7 @@ function mathOp(x, operation, y, Leng) {
             result = result.join("")
         }
     }
-
     return result.toString();
-
 }
 
 calculator(prompt('Введите пример'));
